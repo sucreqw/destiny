@@ -15,14 +15,16 @@ import org.springframework.stereotype.Service;
 public class ConvertToEightWord {
 
     //命例对象
-    Person person=null;
+    Person person = null;
+
     /**
      * 根据出生年月日返回具体的八字
+     *
      * @param isChinese 是否为农历
-     * @param year 出生年份
-     * @param month 出生月份
-     * @param day 出生日
-     * @param nick 昵称
+     * @param year      出生年份
+     * @param month     出生月份
+     * @param day       出生日
+     * @param nick      昵称
      * @return
      */
     public Person timeToEight(boolean isChinese, int year, int month, int day, String nick) {
@@ -35,17 +37,17 @@ public class ConvertToEightWord {
 
         person.setNick(nick);//添加昵称
         person.setYear(chineseCalendar.get(ChineseCalendar.CHINESE_YEAR));//添加阳历年份
-        person.setMonth(chineseCalendar.get(ChineseCalendar.MONTH)+1);//添加阳历月份
+        person.setMonth(chineseCalendar.get(ChineseCalendar.MONTH) + 1);//添加阳历月份
         person.setDay(chineseCalendar.get(ChineseCalendar.DATE));//添加阳历日
 
         person.setChineseYear(chineseCalendar.getChinese(ChineseCalendar.CHINESE_YEAR));//添加农历年：己亥
-        person.setChineseYear(chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH));//添加农历月
-        person.setChineseYear(chineseCalendar.getChinese(ChineseCalendar.CHINESE_DATE));//添加农历日：初二
+        person.setChineseMonth(chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH));//添加农历月
+        person.setChineseDay(chineseCalendar.getChinese(ChineseCalendar.CHINESE_DATE));//添加农历日：初二
 
         person.setChineseZodiac(chineseCalendar.getChinese(ChineseCalendar.CHINESE_ZODIAC));//添加所属十二生肖
 
-
-
+        //计算天十地支：
+        //先取得最近的节气时间，看看交的是什么月份。
         return person;
     }
 }

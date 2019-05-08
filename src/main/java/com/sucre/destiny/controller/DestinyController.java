@@ -24,16 +24,16 @@ public class DestinyController {
 
     /**
      * 根据出生年月日返回具体的八字
+     *
      * @param isChinese 是否是农历
-     * @param year 出生年份
-     * @param month 出生月份
-     * @param day 出生日
-     * @param nick 昵称
+     * @param year      出生年份
+     * @param month     出生月份
+     * @param day       出生日
+     * @param nick      昵称
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST,value = "/getEightWord")
-    public Person getEightWord(boolean isChinese, int year, int month, int day, String nick){
-
-        return null;
+    @RequestMapping(method = RequestMethod.POST, value = "/getEightWord")
+    public Person getEightWord(boolean isChinese, int year, int month, int day, String nick) {
+        return convertToEightWord.timeToEight(isChinese, year, month, day, nick);
     }
 }

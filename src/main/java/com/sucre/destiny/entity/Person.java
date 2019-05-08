@@ -21,14 +21,24 @@ public class Person {
     String chineseMonth;//农历的出生月
     String chineseDay;//农历的出生日，如：初二
 
-    String ChineseZodiac;//所属生肖
+    String chineseZodiac;//所属生肖
+
+    String comment;//其它的一些信息，比如前一个节气。
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public String getChineseZodiac() {
-        return ChineseZodiac;
+        return chineseZodiac;
     }
 
     public void setChineseZodiac(String chineseZodiac) {
-        ChineseZodiac = chineseZodiac;
+        this.chineseZodiac = chineseZodiac;
     }
 
     String[] eightWord={"年干","年支","月干","月支","日干","日支","时干","时支"};//对应的八字。
