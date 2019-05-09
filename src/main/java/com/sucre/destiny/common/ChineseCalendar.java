@@ -63,6 +63,8 @@ public  class ChineseCalendar extends GregorianCalendar {
     public static final int CHINESE_DATE = 803;
     /** 当月的节气对应的公历日(前一个节气) */
     public static final int CHINESE_SECTIONAL_TERM = 804;
+    /** 当月的节气对应的公历日(前一个节气) */
+    public static final int CHINESE_PREVIOUS_SECTIONAL_TERM = 814;
     /** 当月的中气对应的公历日(后一个节气) */
     public static final int CHINESE_PRINCIPLE_TERM = 805;
     /** 天干 */
@@ -317,6 +319,9 @@ public  class ChineseCalendar extends GregorianCalendar {
                 return chineseDateNames[chineseDate];
             case CHINESE_SECTIONAL_TERM:
                 return sectionalTermNames[get(Calendar.MONTH)];
+                //上一个月的节气
+            case CHINESE_PREVIOUS_SECTIONAL_TERM:
+                return sectionalTermNames[get(Calendar.MONTH)-1];
             case CHINESE_PRINCIPLE_TERM:
                 return principleTermNames[get(Calendar.MONTH)];
             case CHINESE_HEAVENLY_STEM:

@@ -32,7 +32,7 @@ public class DestinyController {
      * @param nick      昵称
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/getEightWord")
+      @RequestMapping(method = RequestMethod.POST, value = "/getEightWord")
     public Person getEightWord(boolean isChinese, int year, int month, int day, String nick) {
         return convertToEightWord.timeToEight(isChinese, year, month, day, nick);
     }
