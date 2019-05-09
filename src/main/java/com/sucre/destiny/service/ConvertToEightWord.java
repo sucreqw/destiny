@@ -1,9 +1,14 @@
 package com.sucre.destiny.service;
 
 import com.sucre.destiny.common.ChineseCalendar;
+import com.sucre.destiny.common.LunarTerm;
 import com.sucre.destiny.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author sucre chen 906509023@qq.com
@@ -20,6 +25,8 @@ public class ConvertToEightWord {
 
     @Autowired
     TermToEarth termToEarth;
+
+
     /**
      * 根据出生年月日返回具体的八字
      *
@@ -84,33 +91,34 @@ public class ConvertToEightWord {
     public ChineseCalendar getSpringDate(boolean isChinese,int year,int month){
         //接收当前月份节气
         String springDay="";
+        //建立取节气的common类
+        LunarTerm lunarTerm=new LunarTerm();
+        //取得立春的具体时间。
+        springDay=lunarTerm.getTimeByTerm(year-1,"立春");
 
         ChineseCalendar chineseCalendar=new ChineseCalendar();
-        //开始循环取节气 并判断，直到找到立春节气
-        while (true){
-            //从开始找
-            chineseCalendar.set(year,month,1);
-            springDay=chineseCalendar.getChinese(ChineseCalendar.CHINESE_SECTIONAL_TERM);
-            if(springDay.equals("立春")){
 
-                break;
-            }else{
-                month--;
-                if(isChinese){
-                    if(month==0){
-                        year--;
-                        month=12;
-                    }
-                }else{
-                    if(month<0){
-                        year--;
-                        month=12;
-                    }
-                }
-
-            }
-        }
 
         return chineseCalendar;
+    }
+
+
+    /**
+     * 把LunarTerm 取到的节气时间转换成date类型，重新加载到一个ChineseCalendar对象里。
+     * @param time
+     * @return
+     */
+    private Date StringToDate(String time){
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date=sdf2.parse(time);
+            return date;
+            //String stamp=String.valueOf(date.getTime());
+
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        return null;
     }
 }
