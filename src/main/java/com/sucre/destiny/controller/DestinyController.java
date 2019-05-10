@@ -33,7 +33,7 @@ public class DestinyController {
      * @return
      */
       @RequestMapping(method = RequestMethod.POST, value = "/getEightWord")
-    public Person getEightWord(boolean isChinese, int year, int month, int day, String nick) {
-        return convertToEightWord.timeToEight(isChinese, year, month, day, nick);
+    public Person getEightWord(boolean isChinese, int year, int month, int day, int hour,int min,int sec,String nick) {
+        return convertToEightWord.timeToEight(isChinese, year, month, day, hour,min,sec,nick);
     }
 }

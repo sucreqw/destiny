@@ -75,7 +75,14 @@ public  class ChineseCalendar extends GregorianCalendar {
     public static final int CHINESE_ZODIAC = 808;
     /** 节气或者农历日 */
     public static final int CHINESE_TERM_OR_DATE = 888;
-
+    //小时
+    public static final int DATE_HOUR=815;
+    //分钟
+    public static final int DATE_MIN=816;
+    //秒
+    public static final int DATE_SEC=817;
+    //时间戳
+    public static final int TIMESTAMP=818;
 
     // add by skywang
     /** 农历节日 */
@@ -89,11 +96,16 @@ public  class ChineseCalendar extends GregorianCalendar {
     /** 节日 或 节气 或 农历日 */
     public static final int FESTIVAL_OR_TERM_OR_DATE = 813;
 
+
     private int chineseYear;
     private int chineseMonth; // 1起始，负数表示闰月
     private int chineseDate;
     private int sectionalTerm; // 当月节气的公历日
     private int principleTerm; // 当月中气的公历日
+    private int hour; //小时
+    private int min;//分钟
+    private int sec;//秒
+
 
     private boolean areChineseFieldsComputed; // 农历日期是否已经经过计算确认
     private boolean areSolarTermsComputed; // 节气是否已经经过计算确认
@@ -136,8 +148,33 @@ public  class ChineseCalendar extends GregorianCalendar {
         } else {
             set(y, m, d);
         }
-    }
 
+    }
+    /**
+     * 使用指定日期构造一个实例。
+     *
+     * @param isChinese
+     *   是否为农历日期
+     * @param y
+     * @param m
+     * @param d
+     * @param h
+     * @param min
+     * @param sec
+     */
+    public ChineseCalendar(boolean isChinese, int y, int m, int d,int h,int min,int sec) {
+        if (isChinese) {
+            set(CHINESE_YEAR, y);
+            set(CHINESE_MONTH, m);
+            set(CHINESE_DATE, d);
+        } else {
+            set(y, m, d,h,min,sec);
+        }
+
+        /*this.hour=h;
+        this.min=min;
+        this.sec=sec;*/
+    }
     public void set(int field, int value) {
         computeIfNeed(field);
 
@@ -208,6 +245,15 @@ public  class ChineseCalendar extends GregorianCalendar {
                     option = CHINESE_DATE;
                 }
                 return option;
+
+            case DATE_HOUR:
+                return super.get(Calendar.HOUR_OF_DAY);
+            case DATE_MIN:
+                return super.get(Calendar.MINUTE);
+            case DATE_SEC:
+                return super.get(Calendar.SECOND);
+            case TIMESTAMP:
+                return super.get(Calendar.MILLISECOND);
             default:
                 throw new IllegalArgumentException("不支持的field获取：" + field);
         }
@@ -407,6 +453,8 @@ public  class ChineseCalendar extends GregorianCalendar {
                 return false;
         }
     }
+
+
 
     /**
      * 判断是不是与节气有关的属性

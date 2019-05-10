@@ -16,7 +16,7 @@ public class DestinyApplicationTests {
     @Test
     public void contextLoads() {
         LunarTerm  st = new LunarTerm();
-        System.out.println(st.getTimeByTerm(1987,"立春"));
+        System.out.println(st.getTimeByTerm(1988,"立春"));
 
     }
 
