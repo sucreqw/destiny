@@ -1,5 +1,4 @@
 package com.sucre.destiny.common;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -626,7 +625,7 @@ public class LunarTerm {
             q = jiaoCal(jd + i * 15.2, i * 15, 0);
             q = q + J2000 + (double) 8 / 24; // 计算第i个节气(i=0是春风),结果转为北京时
             setFromJD(q, true);
-            s1 = toStr().substring(1, 11); // 将儒略日转成世界时
+            s1 = toStr(); // 将儒略日转成世界时
             map.put("term", jqB[i]);
             map.put("date", s1);
             list.add(map);

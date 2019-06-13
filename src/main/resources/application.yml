@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: destiny
+  profiles:
+    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.sucre.destiny.entity

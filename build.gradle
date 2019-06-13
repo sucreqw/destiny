@@ -16,4 +16,21 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-spi', version: '2.9.2'
+    
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.58'
+
+    compile group: 'com.baomidou', name: 'mybatis-plus', version: '3.1.1'
+    compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.1.1'
+
+    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.1.1'
+    compile group: 'org.apache.velocity', name: 'velocity-engine-core', version: '2.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
+    compile group: 'com.alibaba', name: 'druid', version: '1.1.17'
+    
+
+
 }

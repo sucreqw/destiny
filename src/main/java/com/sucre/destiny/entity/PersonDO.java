@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Description: 个人信息类，包括年月日，八字，昵称等。
  * @date 2019-05-08 14:28
  */
-public class Person {
+public class PersonDO {
 
     String nick;//昵称
 
