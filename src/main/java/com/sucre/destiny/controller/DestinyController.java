@@ -32,16 +32,11 @@ public class DestinyController {
      */
 
     @PostMapping("/")
-    public CommonResult<PersonInfo> getEightWord(Boolean isChinese, @RequestBody PersonDTO person) {
+    public CommonResult<PersonInfo> getEightWord(@RequestParam(defaultValue ="false") Boolean isChinese , @RequestBody PersonDTO person) {
         CommonResult<PersonInfo> result = new CommonResult<>();
+        //isChinese=isChinese==null?false:isChinese;
         result.setData(iEightWord.time2Person(isChinese,person));
         return result;
     }
-
-    @GetMapping("/{id}")
-    public CommonResult<PersonInfo> getPerson(Integer id) {
-        CommonResult<PersonInfo> result = new CommonResult<>();
-        result.setData(personInfo);
-        return result;
-    }
+    
 }

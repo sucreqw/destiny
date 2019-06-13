@@ -163,15 +163,15 @@ public  class ChineseCalendar extends GregorianCalendar {
      * @param sec
      */
     public ChineseCalendar(boolean isChinese, int y, int m, int d,int h,int min,int sec) {
+        set(y, m, d,h,min,sec);
         if (isChinese) {
+
             set(CHINESE_YEAR, y);
             set(CHINESE_MONTH, m);
             set(CHINESE_DATE, d);
-        } else {
-            set(y, m, d,h,min,sec);
-        }
 
-        /*this.hour=h;
+        } 
+       /* this.hour=h;
         this.min=min;
         this.sec=sec;*/
     }
