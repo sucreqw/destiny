@@ -38,5 +38,5 @@ public class DestinyController {
         result.setData(iEightWord.time2Person(isChinese,person));
         return result;
     }
-    
+
 }
