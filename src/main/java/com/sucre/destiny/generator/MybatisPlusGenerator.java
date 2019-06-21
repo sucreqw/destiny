@@ -21,9 +21,9 @@ public class MybatisPlusGenerator {
     private final static String dbDriverName = "com.mysql.jdbc.Driver";
     private final static String dbUserName = "root";
     private final static String dbPassword = "root";
-    private final static String dbUrl = "jdbc:mysql://192.168.22.134:33060/destiny?useSSL=false";
+    private final static String dbUrl = "jdbc:mysql://192.168.22.129:33060/cool?useSSL=false";
 
-    private final static String parentPackage = "com.sucre.destiny";
+    private final static String parentPackage = "com.sucre.cool";
     private final static String entityPackage = "entity";
     private final static String mapperPackage = "dao";
     private final static String xmlPackage = "mappers";
@@ -54,8 +54,12 @@ public class MybatisPlusGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setInclude(
 
-                "d_user",
-                "d_person"
+                "comments",
+                "drone",
+                "dronecomment",
+                "generations",
+                "user",
+                "weibo"
         );
         //strategy.setExclude("alembic_version");
         strategy.setRestControllerStyle(true);
