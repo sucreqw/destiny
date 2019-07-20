@@ -32,10 +32,10 @@ public class DestinyController {
      */
 
     @PostMapping("/")
-    public CommonResult<PersonInfo> getEightWord(@RequestParam(defaultValue ="false") Boolean isChinese , @RequestBody PersonDTO person) {
+    public CommonResult<PersonInfo> getEightWord(@RequestParam(defaultValue ="false") Boolean isLeap,@RequestParam(defaultValue ="false") Boolean isChinese , @RequestBody PersonDTO person) {
         CommonResult<PersonInfo> result = new CommonResult<>();
         //isChinese=isChinese==null?false:isChinese;
-        result.setData(iEightWord.time2Person(isChinese,person));
+        result.setData(iEightWord.time2Person(isLeap,isChinese,person));
         return result;
     }
 

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: destiny
+  profiles:
+    active: prod
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/destiny?useSSL=false&characterEncoding=utf-8
+    username: root
+    password: WQwqwq19890407!
+server:
+  port: 8088
+  servlet:
+    context-path: /api
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.sucre.destiny.entity
+
+
+swagger:
+  enable: false
+logging:
+  level:
+    org.springframework.web: debug

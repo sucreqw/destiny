@@ -6,5 +6,5 @@ import com.sucre.destiny.info.PersonInfo;
 import java.util.Calendar;
 
 public interface IEightWord {
-    PersonInfo time2Person(Boolean isChinese,PersonDTO personDTO);
+    PersonInfo time2Person(Boolean isLeap,Boolean isChinese,PersonDTO personDTO);
 }

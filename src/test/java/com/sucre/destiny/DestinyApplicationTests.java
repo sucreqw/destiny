@@ -1,6 +1,8 @@
 package com.sucre.destiny;
 
 import com.sucre.destiny.common.LunarTerm;
+import com.sucre.destiny.info.PersonInfo;
+import com.sucre.destiny.service.impl.WeightImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +17,9 @@ public class DestinyApplicationTests {
 
     @Test
     public void contextLoads() {
-        LunarTerm  st = new LunarTerm();
-        System.out.println(st.getTimeByTerm(1988,"立春"));
-
+        Double sumWeight=2.20000000004;
+        Long result=Math.round((sumWeight-2.1)*10);
+        System.out.println(result);
     }
 
 }

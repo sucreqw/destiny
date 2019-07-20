@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PersonInfo {
-    String nick;//昵称
+    private String nick;//昵称
 
     private Integer year;//阳历的出生年
     private Integer month;//阳历的出生月

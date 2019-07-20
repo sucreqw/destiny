@@ -2,12 +2,14 @@ package com.sucre.destiny.service.impl;
 
 import com.sucre.destiny.common.ChineseCalendar;
 import com.sucre.destiny.common.LunarTerm;
+import com.sucre.destiny.common.lunarTosolar.Lunar;
+import com.sucre.destiny.common.lunarTosolar.LunarSolar;
+import com.sucre.destiny.common.lunarTosolar.Solar;
 import com.sucre.destiny.dto.PersonDTO;
 import com.sucre.destiny.enums.ResultCodeEnum;
 import com.sucre.destiny.exception.BizException;
 import com.sucre.destiny.info.PersonInfo;
 import com.sucre.destiny.service.IEightWord;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,7 @@ public class ConvertToEightWord implements IEightWord {
         String result = null;//接收月干的结果
         List<Map<String, String>> list = new ArrayList<>(); //接收日主所在年份的所有节气
         Map<String, String> map = new HashMap<>();//接收当前节气
+        Map<String,String>lastMap=new HashMap<>();//接收最后一个节气，取当前交接节气跨年时用。
         //循环直接到 未交接的节气。
         while (result == null) {
             list = allTerm(year);//接收日主所在年份的所有节气
@@ -69,11 +72,13 @@ public class ConvertToEightWord implements IEightWord {
                 map = list.get(i);//接收当前节气
                 Long termTime = TimeToStamp(map.get("date"));//把当前节气的具体时间转换成毫秒
                 if (termTime >= myTime) {//把当前节气的毫秒 大于或者等于 日主出生年月，说明没交当前节气，月干返回上一个节气
-                    map = list.get(i - 1);//上一个节气
+                    map = i==0?lastMap:list.get(i - 1);//上一个节气
                     result = map.get("term");//把上一个节气的名称返回
                     break;
                 }
+
             }
+            lastMap=map;
             year++;//所在年的节气都过了，加1 在下一年找没交接的节气。
         }
         /**
@@ -206,18 +211,33 @@ public class ConvertToEightWord implements IEightWord {
     }
 
     @Override
-    public PersonInfo time2Person(Boolean isChinese,PersonDTO personDTO) {
+    public PersonInfo time2Person(Boolean isLeap,Boolean isChinese,PersonDTO personDTO) {
         Calendar calendar = Calendar.getInstance();
         PersonInfo personInfo = new PersonInfo();
         ChineseCalendar chineseCalendar=null;
         if(isChinese) {
-            chineseCalendar=new ChineseCalendar(isChinese,personDTO.getYear(), personDTO.getMonth(), personDTO.getDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
-            calendar.set(chineseCalendar.get(ChineseCalendar.YEAR),chineseCalendar.get(ChineseCalendar.MONTH),chineseCalendar.get(ChineseCalendar.DATE),chineseCalendar.get(ChineseCalendar.HOUR),chineseCalendar.get(ChineseCalendar.MINUTE),chineseCalendar.get(ChineseCalendar.SECOND));
+            if(!isLeap) {
+                chineseCalendar = new ChineseCalendar(isChinese, personDTO.getYear(), personDTO.getMonth(), personDTO.getDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
+                calendar.set(chineseCalendar.get(ChineseCalendar.YEAR), chineseCalendar.get(ChineseCalendar.MONTH), chineseCalendar.get(ChineseCalendar.DATE), chineseCalendar.get(Calendar.HOUR_OF_DAY), chineseCalendar.get(ChineseCalendar.MINUTE), chineseCalendar.get(ChineseCalendar.SECOND));
+            }else{
+                //农历的闰月，先转换成公历，然后再转换成calendar对象
+                LunarSolar lunarSolar = new LunarSolar();
+                Lunar lunar=new Lunar();
+                lunar.setLunarYear(personDTO.getYear());
+                lunar.setLunarMonth(personDTO.getMonth());
+                lunar.setLunarDay(personDTO.getDay());
+                lunar.setIsleap(true);//闰月
+                Solar new_solar = lunarSolar.LunarToSolar(lunar);//转换成公历
+                //设置日主的出生年月。calendar的月份从0开始算，所以要减1
+                calendar.set(new_solar.getSolarYear(), new_solar.getSolarMonth()-1, new_solar.getSolarDay(), personDTO.getHour(), personDTO.getMinute(),personDTO.getSecond());
+               // chineseCalendar= new ChineseCalendar(calendar);
+            }
         }else {
             //设置日主的出生年月。calendar的月份从0开始算，所以要减1
             calendar.set(personDTO.getYear(), personDTO.getMonth() - 1, personDTO.getDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
-            chineseCalendar= new ChineseCalendar(calendar);
+           // chineseCalendar= new ChineseCalendar(calendar);
         }
+        chineseCalendar= new ChineseCalendar(calendar);
         //开始装入返回数据。
         //BeanUtils.copyProperties(personDTO,personInfo);
         //装入昵称，阳历出生年月日等
