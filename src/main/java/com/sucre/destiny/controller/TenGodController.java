@@ -5,6 +5,8 @@ import com.sucre.destiny.dto.TenGodDTO;
 import com.sucre.destiny.info.CommonResult;
 import com.sucre.destiny.info.PersonInfo;
 import com.sucre.destiny.info.TenGodInfo;
+import com.sucre.destiny.service.ITenGodService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,20 +21,18 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/TenGod")
 public class TenGodController {
-
+    @Autowired
+    ITenGodService iTenGodService;
     /**
      *  传入八字对象，返回对应的十神和藏干。
      * @param eightWord
      * @return
      */
     @PostMapping("/")
-    public CommonResult<TenGodInfo> getEightWord(@RequestBody TenGodDTO eightWord) {
+    public CommonResult<TenGodInfo> getTenGod(@RequestBody TenGodDTO eightWord) {
         CommonResult<TenGodInfo> result = new CommonResult<>();
-        HashMap<String,String> h=new HashMap<>();
-        h.put("test","v");
-        h.put("22","55");
-        TenGodInfo tenGodInfo=new TenGodInfo();
-        tenGodInfo.setTest(h);
+         TenGodInfo tenGodInfo=iTenGodService.eightToGod(eightWord);
+         result.setData(tenGodInfo);
         return result;
     }
 }
