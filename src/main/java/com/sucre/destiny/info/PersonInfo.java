@@ -12,6 +12,9 @@ public class PersonInfo {
     private Integer hour;
     private Integer minute;
     private Integer second;
+    private Integer gender;//性别
+
+
 
     String chineseYear;//农历的出生年，如：己亥
     String chineseMonth;//农历的出生月
@@ -123,5 +126,12 @@ public class PersonInfo {
 
     public void setEightWord(List<String> eightWord) {
         this.eightWord = eightWord;
+    }
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 }

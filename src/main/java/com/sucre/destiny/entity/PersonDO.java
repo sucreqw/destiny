@@ -13,9 +13,11 @@ public class PersonDO {
 
     String nick;//昵称
 
-    int year;//阳历的出生年
-    int month;//阳历的出生月
-    int day;//阳历的出生日
+    Integer year;//阳历的出生年
+    Integer month;//阳历的出生月
+    Integer day;//阳历的出生日
+    
+    Integer gender;//性别
 
     String chineseYear;//农历的出生年，如：己亥
     String chineseMonth;//农历的出生月
@@ -51,27 +53,27 @@ public class PersonDO {
         this.nick = nick;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
-    public int getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
 
-    public int getDay() {
+    public Integer getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    public void setDay(Integer day) {
         this.day = day;
     }
 
@@ -101,6 +103,14 @@ public class PersonDO {
 
     public String[] getEightWord() {
         return eightWord;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public void setEightWord(String[] eightWord) {

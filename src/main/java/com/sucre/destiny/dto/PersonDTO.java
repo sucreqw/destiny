@@ -10,8 +10,17 @@ public class PersonDTO {
     private Integer hour;
     private Integer minute;
     private Integer second;
+    private Integer gender;
     private LocalDateTime birthday;
     private String nick;
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
 
     public Integer getYear() {
         return year;
