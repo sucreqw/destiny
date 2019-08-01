@@ -1,5 +1,9 @@
 package com.sucre.destiny.service;
 
+import com.sucre.destiny.dto.PersonDTO;
+import com.sucre.destiny.info.PersonInfo;
+import com.sucre.destiny.info.YearFateInfo;
+
 public interface IYearFateService {
-    void bigFate();
+    YearFateInfo bigFate(PersonInfo personInfo);
 }

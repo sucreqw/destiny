@@ -248,7 +248,8 @@ public class ConvertToEightWord implements IEightWord {
         personInfo.setHour(calendar.get(Calendar.HOUR));
         personInfo.setMinute(calendar.get(Calendar.MINUTE));
         personInfo.setSecond(calendar.get(Calendar.SECOND));
-
+        //装入性别
+        personInfo.setGender(personDTO.getGender());
         //装入对应的农历
         personInfo.setChineseYear(chineseCalendar.getChinese(ChineseCalendar.CHINESE_YEAR));
         personInfo.setChineseMonth(chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH));
