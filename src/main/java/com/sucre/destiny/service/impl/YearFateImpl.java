@@ -87,7 +87,7 @@ public class YearFateImpl implements IYearFateService {
         //开始上运的年，月，日。
         yearFateInfo.setFateYearDetail("公历");
         yearFateInfo.setFateYear(calendar.get(Calendar.YEAR));
-        yearFateInfo.setFateMonth(calendar.get(Calendar.MONTH));
+        yearFateInfo.setFateMonth(calendar.get(Calendar.MONTH+1));//有份从0开始，所以要加1.
         yearFateInfo.setFateDay(calendar.get(Calendar.DATE));
 
 
