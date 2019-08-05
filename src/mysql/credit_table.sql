@@ -24,9 +24,9 @@ CREATE TABLE `pay_record`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `card_id` int(0) NOT NULL,
   `pay_date` date NOT NULL,
-  `amount` decimal(20, 0) NOT NULL,
+  `amount` decimal(20, 2) NOT NULL,
   `currency` int(10) NOT NULL,
   `detail` varchar(255) NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `card_id` FOREIGN KEY (`card_id`) REFERENCES `credit`.`card` (`id`)
+  CONSTRAINT `card_id` FOREIGN KEY (`card_id`) REFERENCES `cool`.`card` (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
