@@ -13,11 +13,15 @@ public class YearFateInfo {
 
     //上运的年月日，公历。
     Integer fateYear;
-
-
     Integer fateMonth;
     Integer fateDay;
     String fateYearDetail;
+
+    //小运
+    List<String> littleFateGen;
+    List<String> littleFateZhi;
+    //流年
+    List<Integer> flowYear;
 
     public Integer getAgeYear() {
         return ageYear;
@@ -107,4 +111,27 @@ public class YearFateInfo {
         this.fateYearDetail = fateYearDetail;
     }
 
+    public List<String> getLittleFateGen() {
+        return littleFateGen;
+    }
+
+    public void setLittleFateGen(List<String> littleFateGen) {
+        this.littleFateGen = littleFateGen;
+    }
+
+    public List<String> getLittleFateZhi() {
+        return littleFateZhi;
+    }
+
+    public void setLittleFateZhi(List<String> littleFateZhi) {
+        this.littleFateZhi = littleFateZhi;
+    }
+
+    public List<Integer> getFlowYear() {
+        return flowYear;
+    }
+
+    public void setFlowYear(List<Integer> flowYear) {
+        this.flowYear = flowYear;
+    }
 }

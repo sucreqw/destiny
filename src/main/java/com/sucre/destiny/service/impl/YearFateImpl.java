@@ -66,7 +66,9 @@ public class YearFateImpl implements IYearFateService {
             }
         }
         //循环得到十个大运
-        result = getBigFate(indexOfGen(eight.get(2)), indexOfZhi(eight.get(3)), fORb);
+        result = getBigFate(indexOfGen(eight.get(2)), indexOfZhi(eight.get(3)), fORb,10);
+        //循环得到90个小运。
+        List<List> littleFate=getBigFate(indexOfGen(eight.get(6)), indexOfZhi(eight.get(7)), fORb,90);
         //得到上运时间。
         List<Integer> ymdOfFate=yearOfFate(personInfo, fORb);
         //把得到的上运时间（年，月，日）加上日主的出生年月日，得到实际的上运时间。
@@ -81,8 +83,12 @@ public class YearFateImpl implements IYearFateService {
         calendar.add(Calendar.DATE,ymdOfFate.get(2));
 
         //装入info对象返回。
+        //装入大运
         yearFateInfo.setBigFateGen(result.get(0));
         yearFateInfo.setBigFateZhi(result.get(1));
+        //装入小运
+        yearFateInfo.setLittleFateGen(littleFate.get(0));
+        yearFateInfo.setLittleFateZhi(littleFate.get(1));
 
         //开始上运的年，月，日。
         yearFateInfo.setFateYearDetail("公历");
@@ -107,6 +113,13 @@ public class YearFateImpl implements IYearFateService {
             tem.add(calendar.get(Calendar.YEAR)+(i*10));
         }
         yearFateInfo.setBigFateYear(tem);
+        //装入流年
+        List<Integer> flowYear=new ArrayList<>();
+        for(int i=0;i<90;i++){
+            flowYear.add(year+(i));
+        }
+        yearFateInfo.setFlowYear(flowYear);
+
         return yearFateInfo;
     }
 
@@ -139,27 +152,27 @@ public class YearFateImpl implements IYearFateService {
     }
 
     /**
-     * 根据月柱取大运.
+     * 根据月柱取大运、小运.
      *
      * @param genIndex 月柱天干
      * @param zhiIndex 月柱地支
      * @param fORb     0：顺行 或者 1：逆行
      * @return
      */
-    private List<List> getBigFate(int genIndex, int zhiIndex, int fORb) {
+    private List<List> getBigFate(int genIndex, int zhiIndex, int fORb,int len) {
         List<String> bigFateGen = new ArrayList<>();
         List<String> bigFateZhi = new ArrayList<>();
         List<List> result = new ArrayList<>();
         //取十个大运。
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i <= len; i++) {
             if (fORb == 0) {
                 //顺行。
-                bigFateGen.add(this.Gen[(10 + genIndex + i) % 10]);
-                bigFateZhi.add(this.Zhi[(12 + zhiIndex + i) % 12]);
+                bigFateGen.add(this.Gen[Math.floorMod((10 + genIndex + i) , 10)]);
+                bigFateZhi.add(this.Zhi[Math.floorMod((12 + zhiIndex + i) ,12)]);
             } else {
                 //逆行。
-                bigFateGen.add(this.Gen[(10 + genIndex - i) % 10]);
-                bigFateZhi.add(this.Zhi[(12 + zhiIndex - i) % 12]);
+                bigFateGen.add(this.Gen[Math.floorMod((10 + genIndex - i) , 10)]);
+                bigFateZhi.add(this.Zhi[Math.floorMod((12 + zhiIndex - i) , 12)]);
             }
 
         }
@@ -212,8 +225,8 @@ public class YearFateImpl implements IYearFateService {
                     if (termTime <= myTime) {//把当前节气的毫秒 大于或者等于 日主出生年月，说明没交当前节。
                         map = list.get(i);//返回这个未交的节
 
-                        Long temp = myTime - termTime;//出生的时间减去上一个节的时间。
-                        System.out.println(myTime+temp);
+                       // Long temp = myTime - termTime;//出生的时间减去上一个节的时间。
+                        //System.out.println(myTime+temp);
                         startFate = timeOfFate(myTime - termTime);
                         break;
                     }

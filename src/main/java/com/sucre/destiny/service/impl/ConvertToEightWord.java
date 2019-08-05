@@ -34,8 +34,8 @@ public class ConvertToEightWord implements IEightWord {
             "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑",
             "甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"
     };
-    public final  String[] Gan = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
-    public final  String[] Zhi = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
+    public final String[] Gan = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
+    public final String[] Zhi = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
 
     @Autowired
     TermToEarth termToEarth;//
@@ -62,7 +62,7 @@ public class ConvertToEightWord implements IEightWord {
         String result = null;//接收月干的结果
         List<Map<String, String>> list = new ArrayList<>(); //接收日主所在年份的所有节气
         Map<String, String> map = new HashMap<>();//接收当前节气
-        Map<String,String>lastMap=new HashMap<>();//接收最后一个节气，取当前交接节气跨年时用。
+        Map<String, String> lastMap = new HashMap<>();//接收最后一个节气，取当前交接节气跨年时用。
         //循环直接到 未交接的节气。
         while (result == null) {
             list = allTerm(year);//接收日主所在年份的所有节气
@@ -72,13 +72,13 @@ public class ConvertToEightWord implements IEightWord {
                 map = list.get(i);//接收当前节气
                 Long termTime = TimeToStamp(map.get("date"));//把当前节气的具体时间转换成毫秒
                 if (termTime >= myTime) {//把当前节气的毫秒 大于或者等于 日主出生年月，说明没交当前节气，月干返回上一个节气
-                    map = i==0?lastMap:list.get(i - 1);//上一个节气
+                    map = i == 0 ? lastMap : list.get(i - 1);//上一个节气
                     result = map.get("term");//把上一个节气的名称返回
                     break;
                 }
 
             }
-            lastMap=map;
+            lastMap = map;
             year++;//所在年的节气都过了，加1 在下一年找没交接的节气。
         }
         /**
@@ -133,7 +133,7 @@ public class ConvertToEightWord implements IEightWord {
      * @param birthDay
      * @return 等于或大于返回true.否则返回false
      */
-    private  boolean isCrossSpring(Calendar birthDay) {
+    private boolean isCrossSpring(Calendar birthDay) {
 
         Long springTime = TimeToStamp(springTime(birthDay.get(Calendar.YEAR)));
         Long myTime = (birthDay.getTimeInMillis() / 1000) * 1000;
@@ -147,11 +147,11 @@ public class ConvertToEightWord implements IEightWord {
      * @param year
      * @return
      */
-    private  String springTime(Integer year) {
+    private String springTime(Integer year) {
         String springDay = "";
         LunarTerm lunarTerm = new LunarTerm();
         springDay = lunarTerm.getTimeByTerm((year - 1), "立春");
-        System.out.println(springDay);
+        //System.out.println(springDay);
         //System.out.println(TimeToStamp(springDay));
         // lunarTerm.JQtest(year-1);
         return springDay;
@@ -163,7 +163,7 @@ public class ConvertToEightWord implements IEightWord {
      * @param year
      * @return {date= 1988-03-20 17:38:45, term=春分}
      */
-    private  List<Map<String, String>> allTerm(Integer year) {
+    private List<Map<String, String>> allTerm(Integer year) {
         LunarTerm lunarTerm = new LunarTerm();
         return lunarTerm.JQList(year - 1);
     }
@@ -195,7 +195,7 @@ public class ConvertToEightWord implements IEightWord {
      * @param time
      * @return
      */
-    private  Long TimeToStamp(String time) {
+    private Long TimeToStamp(String time) {
         //System.out.println(time);
         //System.out.println(System.currentTimeMillis());
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -211,39 +211,39 @@ public class ConvertToEightWord implements IEightWord {
     }
 
     @Override
-    public PersonInfo time2Person(Boolean isLeap,Boolean isChinese,PersonDTO personDTO) {
+    public PersonInfo time2Person(Boolean isLeap, Boolean isChinese, PersonDTO personDTO) {
         Calendar calendar = Calendar.getInstance();
         PersonInfo personInfo = new PersonInfo();
-        ChineseCalendar chineseCalendar=null;
-        if(isChinese) {
-            if(!isLeap) {
+        ChineseCalendar chineseCalendar = null;
+        if (isChinese) {
+            if (!isLeap) {
                 chineseCalendar = new ChineseCalendar(isChinese, personDTO.getYear(), personDTO.getMonth(), personDTO.getDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
                 calendar.set(chineseCalendar.get(ChineseCalendar.YEAR), chineseCalendar.get(ChineseCalendar.MONTH), chineseCalendar.get(ChineseCalendar.DATE), chineseCalendar.get(Calendar.HOUR_OF_DAY), chineseCalendar.get(ChineseCalendar.MINUTE), chineseCalendar.get(ChineseCalendar.SECOND));
-            }else{
+            } else {
                 //农历的闰月，先转换成公历，然后再转换成calendar对象
                 LunarSolar lunarSolar = new LunarSolar();
-                Lunar lunar=new Lunar();
+                Lunar lunar = new Lunar();
                 lunar.setLunarYear(personDTO.getYear());
                 lunar.setLunarMonth(personDTO.getMonth());
                 lunar.setLunarDay(personDTO.getDay());
                 lunar.setIsleap(true);//闰月
                 Solar new_solar = lunarSolar.LunarToSolar(lunar);//转换成公历
                 //设置日主的出生年月。calendar的月份从0开始算，所以要减1
-                calendar.set(new_solar.getSolarYear(), new_solar.getSolarMonth()-1, new_solar.getSolarDay(), personDTO.getHour(), personDTO.getMinute(),personDTO.getSecond());
-               // chineseCalendar= new ChineseCalendar(calendar);
+                calendar.set(new_solar.getSolarYear(), new_solar.getSolarMonth() - 1, new_solar.getSolarDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
+                // chineseCalendar= new ChineseCalendar(calendar);
             }
-        }else {
+        } else {
             //设置日主的出生年月。calendar的月份从0开始算，所以要减1
             calendar.set(personDTO.getYear(), personDTO.getMonth() - 1, personDTO.getDay(), personDTO.getHour(), personDTO.getMinute(), personDTO.getSecond());
-           // chineseCalendar= new ChineseCalendar(calendar);
+            // chineseCalendar= new ChineseCalendar(calendar);
         }
-        chineseCalendar= new ChineseCalendar(calendar);
+        chineseCalendar = new ChineseCalendar(calendar);
         //开始装入返回数据。
         //BeanUtils.copyProperties(personDTO,personInfo);
         //装入昵称，阳历出生年月日等
         personInfo.setNick(personDTO.getNick());
         personInfo.setYear(calendar.get(Calendar.YEAR));
-        personInfo.setMonth(calendar.get(Calendar.MONTH)+1);//月份从0开始
+        personInfo.setMonth(calendar.get(Calendar.MONTH) + 1);//月份从0开始
         personInfo.setDay(calendar.get(Calendar.DATE));
         personInfo.setHour(calendar.get(Calendar.HOUR));
         personInfo.setMinute(calendar.get(Calendar.MINUTE));
@@ -255,8 +255,8 @@ public class ConvertToEightWord implements IEightWord {
         personInfo.setChineseMonth(chineseCalendar.getChinese(ChineseCalendar.CHINESE_MONTH));
         personInfo.setChineseDay(chineseCalendar.getChinese(ChineseCalendar.CHINESE_DATE));
 
-        Map<String,Object> resultMap=new HashMap<>();
-        resultMap.put("立春",springTime(personDTO.getYear()).trim());//取本年的立春时间
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("立春", springTime(personDTO.getYear()).trim());//取本年的立春时间
 
         personInfo.setComment(resultMap);
 
