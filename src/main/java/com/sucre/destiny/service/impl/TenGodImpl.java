@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class TenGodImpl implements ITenGodService {
@@ -65,7 +66,7 @@ public class TenGodImpl implements ITenGodService {
         eight.add(tenGodDTO.getMonthGen());
         eight.add(tenGodDTO.getHourGen());
         //用来记录装进去的五行
-        int k=0;
+        int k = 0;
         //用来记录要装数据到info类的索引。
         int p = 0;
         //用来记录天干对应的十神
@@ -99,7 +100,7 @@ public class TenGodImpl implements ITenGodService {
 
 
             //装入计算得到的对应十神
-            tenGodInfo.setByIndex(p, GenToGod(five,genFive));
+            tenGodInfo.setByIndex(p, GenToGod(five, genFive));
             p++;
             k++;
         }
@@ -118,16 +119,16 @@ public class TenGodImpl implements ITenGodService {
             //取地支对应的五行。
             allFive[k] = ZhiFive[zhiFive / 2];
             //根据地支索引取出所有藏干的索引，然后再把对应的藏干装进hideGens数组里。
-            Integer[] hideGenIndex=(Integer[]) HideGen[zhiFive];
+            Integer[] hideGenIndex = (Integer[]) HideGen[zhiFive];
             //记录本地支的所有藏干
-            String[] hideGens=new String[hideGenIndex.length];
+            String[] hideGens = new String[hideGenIndex.length];
             //记录本地支的藏干对应的十神
-            String[] hideGensGod=new String[hideGenIndex.length];
-            for (int j=0;j<hideGenIndex.length;j++){
+            String[] hideGensGod = new String[hideGenIndex.length];
+            for (int j = 0; j < hideGenIndex.length; j++) {
                 //装入对应的天干
-                hideGens[j]=Gen[hideGenIndex[j]];
+                hideGens[j] = Gen[hideGenIndex[j]];
                 //把取到的天干，再取五行索引，然后用genToGod转换对应的十神，装入到数组。
-                hideGensGod[j]=GenToGod(five,indexOfGen(hideGens[j]));
+                hideGensGod[j] = GenToGod(five, indexOfGen(hideGens[j]));
             }
 
             //装入对应地支的藏干
@@ -141,8 +142,25 @@ public class TenGodImpl implements ITenGodService {
         }
         tenGodInfo.setByIndex(p, allFive);
         // System.out.println(Arrays.toString(result));
-       // System.out.println(Arrays.toString(allFive));
+        // System.out.println(Arrays.toString(allFive));
         return tenGodInfo;
+    }
+
+    /**
+     * 根据传入的日主 天干,把列表里的天干 全部转换对应的十神.
+     *
+     * @param gen 日主
+     * @param dayGen 要转换的天干.例如大运.
+     * @return
+     */
+    @Override
+    public List<String> listToGod(List<String> gen, String dayGen) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < gen.size(); i++) {
+            //循环把日主天干的索引,列表天干的索引 传入GenToGod,得到对应的十神,加到返回列表
+             result.add(GenToGod(indexOfGen(dayGen),indexOfGen(gen.get(i))));
+        }
+        return result;
     }
 
     /**
@@ -175,18 +193,19 @@ public class TenGodImpl implements ITenGodService {
 
     /**
      * 根据天干返回对应的十神
-     * @param five 日主所属天干的五行属性索引
-     * @param genFive 要获取的天干的五行属性索引
+     *
+     * @param five    日主所属天干的属性索引
+     * @param genFive 要获取的天干的属性索引
      * @return
      */
-    private String GenToGod(int five,int genFive){
+    private String GenToGod(int five, int genFive) {
 
         //阴阳属性和日主的相同
         if ((five % 2) == (genFive % 2)) {
             //同我者 比食才杀枭
             //装入计算得到的对应十神
             return positiveGod[(5 + (genFive / 2) - (five / 2)) % 5];
-           // tenGodInfo.setByIndex(p, positiveGod[(5 + (genFive / 2) - (five / 2)) % 5]);
+            // tenGodInfo.setByIndex(p, positiveGod[(5 + (genFive / 2) - (five / 2)) % 5]);
 
         } else {
             //异我者 劫伤财官印
