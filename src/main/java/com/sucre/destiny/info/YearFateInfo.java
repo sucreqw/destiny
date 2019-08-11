@@ -8,8 +8,12 @@ public class YearFateInfo {
     Integer ageDay;
     List<Integer> bigFateAge;
     List<Integer> bigFateYear;
+
+    //大运 天干 地支
     List<String> bigFateGen;
     List<String> bigFateZhi;
+    //大运天干对应的十神
+    List<String> bigFateGod;
 
     //上运的年月日，公历。
     Integer fateYear;
@@ -22,6 +26,7 @@ public class YearFateInfo {
     List<String> littleFateZhi;
     //流年
     List<Integer> flowYear;
+
 
     public Integer getAgeYear() {
         return ageYear;
@@ -133,5 +138,13 @@ public class YearFateInfo {
 
     public void setFlowYear(List<Integer> flowYear) {
         this.flowYear = flowYear;
+    }
+
+    public List<String> getBigFateGod() {
+        return bigFateGod;
+    }
+
+    public void setBigFateGod(List<String> bigFateGod) {
+        this.bigFateGod = bigFateGod;
     }
 }
