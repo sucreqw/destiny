@@ -1,5 +1,6 @@
 package com.sucre.destiny.service.impl;
 
+import com.sucre.destiny.common.ChineseCalendar;
 import com.sucre.destiny.common.LunarTerm;
 import com.sucre.destiny.info.PersonInfo;
 import com.sucre.destiny.info.YearFateInfo;
@@ -70,7 +71,7 @@ public class YearFateImpl implements IYearFateService {
         }
         //循环得到十个大运
         result = getBigFate(indexOfGen(eight.get(2)), indexOfZhi(eight.get(3)), fORb, 10);
-        //循环得到90个小运。
+        //循环得到90个小运,小运年份为农历.
         List<List> littleFate = getBigFate(indexOfGen(eight.get(6)), indexOfZhi(eight.get(7)), fORb, 90);
         //得到上运时间。
         List<Integer> ymdOfFate = yearOfFate(personInfo, fORb);
@@ -126,7 +127,12 @@ public class YearFateImpl implements IYearFateService {
             flowYear.add(year + (i));
         }
         yearFateInfo.setFlowYear(flowYear);
-
+        //装入流年对应的六十甲子
+        List<String> Gen = new ArrayList<>();
+        List<String> Zhi = new ArrayList<>();
+        flowYearJZ(year,Gen,Zhi);
+        yearFateInfo.setFlowYearGen(Gen);
+        yearFateInfo.setFlowYearZhi(Zhi);
         return yearFateInfo;
     }
 
@@ -340,4 +346,25 @@ public class YearFateImpl implements IYearFateService {
         return result;
     }
 
+    /**
+     * 获取出生到未来 一共90个流年的六十甲子
+     * @param year 起算年份
+     * @return
+     */
+    private void  flowYearJZ(int year,List<String> Gen,List<String> Zhi){
+        List<String> result = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        ChineseCalendar chineseCalendar = null;
+        //只要年份,所以月份随便设置,必须要返回农历,所以设置农历为true
+        for(int i=0; i<90;i++){
+            chineseCalendar = new ChineseCalendar(true, year+i, 5, 5, 5, 5, 5);
+            String ret=chineseCalendar.getChinese(ChineseCalendar.CHINESE_YEAR);
+            //去掉年字
+            ret.replace("年","");
+            //改成竖形显示并返回.
+            Gen.add(ret.substring(0,1));
+            Zhi.add(ret.substring(1,2));
+        }
+
+    }
 }

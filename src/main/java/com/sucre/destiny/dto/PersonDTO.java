@@ -10,7 +10,7 @@ public class PersonDTO {
     private Integer hour;
     private Integer minute;
     private Integer second;
-    private Integer gender;
+    private Integer gender;//0为女,1为男
     private LocalDateTime birthday;
     private String nick;
 

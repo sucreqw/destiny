@@ -9,7 +9,7 @@ spring:
       enabled: true
       force: true
 server:
-  port: 8088
+  port: 8989
   servlet:
     context-path: /api
 

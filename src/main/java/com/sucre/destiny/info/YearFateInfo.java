@@ -24,9 +24,28 @@ public class YearFateInfo {
     //小运
     List<String> littleFateGen;
     List<String> littleFateZhi;
-    //流年
+    //流年数字
     List<Integer> flowYear;
+    //流年对应的甲子
+    List<String> flowYearGen;
+    List<String> flowYearZhi;
 
+
+    public List<String> getFlowYearGen() {
+        return flowYearGen;
+    }
+
+    public void setFlowYearGen(List<String> flowYearGen) {
+        this.flowYearGen = flowYearGen;
+    }
+
+    public List<String> getFlowYearZhi() {
+        return flowYearZhi;
+    }
+
+    public void setFlowYearZhi(List<String> flowYearZhi) {
+        this.flowYearZhi = flowYearZhi;
+    }
 
     public Integer getAgeYear() {
         return ageYear;
