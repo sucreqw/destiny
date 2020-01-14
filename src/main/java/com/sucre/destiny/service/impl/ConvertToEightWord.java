@@ -269,4 +269,8 @@ public class ConvertToEightWord implements IEightWord {
 
         return personInfo;
     }
+    public PersonInfo time2Person(String time) {
+
+        return null;
+    }
 }

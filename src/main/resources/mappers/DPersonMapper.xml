@@ -5,9 +5,23 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sucre.destiny.entity.DPersonDO">
         <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="detail" property="detail" />
+        <result column="nick" property="nick" />
+        <result column="comment" property="comment" />
         <result column="create_id" property="createId" />
+        <result column="year" property="year" />
+        <result column="month" property="month" />
+        <result column="day" property="day" />
+        <result column="hour" property="hour" />
+        <result column="minute" property="minute" />
+        <result column="second" property="second" />
+        <result column="chinese_day" property="chineseDay" />
+        <result column="chinese_month" property="chineseMonth" />
+        <result column="chinese_year" property="chineseYear" />
+        <result column="chinese_zodiac" property="chineseZodiac" />
+        <result column="eight_word" property="eightWord" />
+        <result column="is_chinese" property="isChinese" />
+        <result column="is_leap" property="isLeap" />
+        <result column="gender" property="gender" />
     </resultMap>
 
 </mapper>

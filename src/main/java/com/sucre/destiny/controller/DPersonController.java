@@ -28,7 +28,7 @@ public class DPersonController {
 
     PersonInfo personInfo;
     /**
-     * 保存一个命例的出生年月日时。
+     * 保存一个命例的出生年月日时。 *先不对外开放
      * @param isChinese 是否是农历
      * @return
      */
@@ -36,9 +36,9 @@ public class DPersonController {
     public CommonResult<Integer> addPerson(@RequestParam(defaultValue ="false") Boolean isChinese, @RequestBody PersonDTO person) {
         CommonResult<Integer> result = new CommonResult<>();
         //isChinese=isChinese==null?false:isChinese;
-        Integer id = idPersonService.addPerson(isChinese,person);
-        result.setData(id);
-        return result;
+        //Integer id = idPersonService.addPerson(isChinese,person);
+        //result.setData(id);
+        return null;
     }
 
     @GetMapping("/{id}")
@@ -47,9 +47,10 @@ public class DPersonController {
         result.setData(idPersonService.getPerson(id));
         return result;
     }
+    //暂时用不到
     @PutMapping("/{id}")
     public void updataPerson(@RequestParam(defaultValue ="false") Boolean isChinese,@PathVariable Integer id, @RequestBody PersonDTO personDTO) {
-        idPersonService.updatePerson( isChinese,id, personDTO);
+        //idPersonService.updatePerson( isChinese,id, personDTO);
     }
     @DeleteMapping("/{id}")
     public void deletePerson(@PathVariable Integer id) {

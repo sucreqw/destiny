@@ -18,9 +18,10 @@ import java.util.List;
  * @since 2019-06-12
  */
 public interface IDPersonService extends IService<DPersonDO> {
-    Integer addPerson(Boolean isChinese,PersonDTO person);
+    Integer addPerson(Boolean isChinese,Boolean isLeap,PersonInfo personInfo);
     void deletePerson(Integer id);
-    void updatePerson(Boolean isChinese,Integer id,PersonDTO person);
+    void updatePerson(Boolean isChinese,Boolean isLeap,Integer id,PersonDTO person);
     PersonInfo getPerson(Integer id);
+    PersonInfo getPersonByNick(String nick);
     Page<DPersonInfo> listPerson(Integer page, Integer pageSize, String name);
 }
