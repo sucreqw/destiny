@@ -6,6 +6,7 @@ import com.sucre.destiny.info.CommonResult;
 import com.sucre.destiny.info.PersonInfo;
 import com.sucre.destiny.info.TenGodInfo;
 import com.sucre.destiny.info.YearFateInfo;
+import com.sucre.destiny.service.IDPersonService;
 import com.sucre.destiny.service.IEightWord;
 import com.sucre.destiny.service.ITenGodService;
 import com.sucre.destiny.service.IYearFateService;
@@ -26,12 +27,22 @@ public class YearFateController {
     IYearFateService iYearFateService;
     @Autowired
     IEightWord iEightWord;
+    @Autowired
+    IDPersonService idPersonService;
 
 
     @PostMapping("/")
     public CommonResult<YearFateInfo> getTenGod(@RequestParam(defaultValue ="false") Boolean isLeap, @RequestParam(defaultValue ="false") Boolean isChinese , @RequestBody PersonDTO person) {
+        PersonInfo personInfo=new PersonInfo();
         CommonResult<YearFateInfo> result = new CommonResult<>();
-        PersonInfo personInfo=iEightWord.time2Person(isLeap,isChinese,person);
+        if(!person.getNick().equals("")){
+            personInfo=idPersonService.getPersonByNick(person.getNick());
+        }
+        if(personInfo==null) {
+            //没有找到之前有查过的记录
+            //按第一次查询处理
+            personInfo = iEightWord.time2Person(isLeap, isChinese, person);
+        }
         YearFateInfo yearFateInfo=iYearFateService.bigFate(personInfo);
         result.setData(yearFateInfo);
         return result;

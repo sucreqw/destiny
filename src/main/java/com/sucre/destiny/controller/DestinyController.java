@@ -48,7 +48,7 @@ public class DestinyController {
             //按第一次查询处理
             personInfo=iEightWord.time2Person(isLeap,isChinese,person);
             //如果姓名不为空,加入记录到数据库
-            if(!person.getNick().equals("")){
+            if(!person.getNick().equals("")&& personInfo!=null){
                 idPersonService.addPerson(isChinese,isLeap,personInfo);
             }
         }
