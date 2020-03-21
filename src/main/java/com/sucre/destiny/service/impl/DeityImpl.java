@@ -35,6 +35,16 @@ public class DeityImpl implements DeityService {
     }
 
     /**
+     * 十恶大败日
+     * @param personInfo
+     * @return
+     */
+    private DeityInfo tenBad(PersonInfo personInfo){
+        List<String> eight=personInfo.getEightWord();
+        DeityInfo deityInfo=new DeityInfo();
+        return null;
+    }
+    /**
      * 命犯陰差陽錯
      * @param personInfo
      * @return
@@ -65,4 +75,5 @@ public class DeityImpl implements DeityService {
         if(eight.get(4).equals("戊") && eight.get(5).equals("寅")){return deityInfo;}
         return null;
     }
+
 }
