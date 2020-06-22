@@ -30,6 +30,7 @@ public class DeityImpl implements DeityService {
         DeityInfo deityInfo=new DeityInfo();
         deityInfo=allFalse(personInfo);
         if(deityInfo!=null){result.add(deityInfo);}
+        if(tenBad(personInfo)!=null){result.add(tenBad(personInfo));}
 
     return result;
     }
@@ -37,11 +38,29 @@ public class DeityImpl implements DeityService {
     /**
      * 十恶大败日
      * @param personInfo
+     * 十恶大败日为甲辰、乙巳、丙申、丁亥、戊戌、己丑、庚辰、辛巳、壬申、癸亥。这十天出生的人临事退却，有志难伸，主恶败。大败日如逢财官，反为富贵。古人忌讳这十日出兵打仗；这十日出生的人主“仓库的金银化为灰尘”，不会持家过日子，花钱如流水。
      * @return
      */
     private DeityInfo tenBad(PersonInfo personInfo){
         List<String> eight=personInfo.getEightWord();
         DeityInfo deityInfo=new DeityInfo();
+        deityInfo.setTitle("十恶大败日");
+        deityInfo.setDescription("这十天出生的人临事退却，有志难伸,主恶败。\n" +
+                "古人忌讳这十日出兵打仗；\n" +
+                "这十日出生的人主'仓库的金银化为灰尘'\n" +
+                "不会持家过日子，花钱如流水.");
+        deityInfo.setSolutions("大败日逢财官，反为富贵.");
+
+        if(eight.get(4).equals("甲") && eight.get(5).equals("辰")){return deityInfo;}
+        if(eight.get(4).equals("乙") && eight.get(5).equals("巳")){return deityInfo;}
+        if(eight.get(4).equals("丙") && eight.get(5).equals("申")){return deityInfo;}
+        if(eight.get(4).equals("丁") && eight.get(5).equals("亥")){return deityInfo;}
+        if(eight.get(4).equals("戊") && eight.get(5).equals("戌")){return deityInfo;}
+        if(eight.get(4).equals("己") && eight.get(5).equals("丑")){return deityInfo;}
+        if(eight.get(4).equals("庚") && eight.get(5).equals("辰")){return deityInfo;}
+        if(eight.get(4).equals("辛") && eight.get(5).equals("巳")){return deityInfo;}
+        if(eight.get(4).equals("壬") && eight.get(5).equals("申")){return deityInfo;}
+        if(eight.get(4).equals("癸") && eight.get(5).equals("亥")){return deityInfo;}
         return null;
     }
     /**
